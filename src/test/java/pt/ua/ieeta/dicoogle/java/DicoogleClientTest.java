@@ -14,29 +14,46 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 package pt.ua.ieeta.dicoogle.java;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
  * @author bastiao
  */
-public class DicoogleClientTest extends TestCase {
+public class DicoogleClientTest {
     
-    public DicoogleClientTest(String testName) {
-        super(testName);
+    public DicoogleClientTest() {
     }
     
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @BeforeClass
+    public static void setUpClass() {
     }
     
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @AfterClass
+    public static void tearDownClass() {
     }
-    // TODO add test methods here. The name must begin with 'test'. For example:
-    // public void testHello() {}
+    
+    @Before
+    public void setUp() {
+    }
+    
+    @After
+    public void tearDown() {
+    }
+    
+    @Test
+    public void testSearch()
+    {
+        DicoogleClient client = new DicoogleClient("http://localhost:6060/");
+        client.searchFreeText("CT");
+        
+    }
 }

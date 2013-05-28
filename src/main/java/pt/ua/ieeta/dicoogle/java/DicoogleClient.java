@@ -42,7 +42,7 @@ public class DicoogleClient implements IDicoogleClient
     
     public List<String> searchFreeText(String query) {
         // Create the client resource  
-        ClientResource resource = new ClientResource(this.endPoint);
+        ClientResource resource = new ClientResource(this.endPoint + EndPoints.DIM + "?q=" + query);
 
         // Customize the referrer property  
         
