@@ -28,14 +28,24 @@ import org.restlet.resource.ClientResource;
  *
  * @author bastiao
  */
-public class DicoogleClient implements IDicoogleClient{
+public class DicoogleClient implements IDicoogleClient
+{
 
+    
+    private String endPoint = "http://localhost:";
+    
+    public DicoogleClient(String endPoint)
+    {
+        this.endPoint = endPoint;
+    }
+    
+    
     public List<String> searchFreeText(String query) {
         // Create the client resource  
-        ClientResource resource = new ClientResource("http://restlet.org");
+        ClientResource resource = new ClientResource(this.endPoint);
 
         // Customize the referrer property  
-        resource.setReferrerRef("http://www.mysite.org");
+        
         try {
             // Write the response entity on the console
             resource.get().write(System.out);
