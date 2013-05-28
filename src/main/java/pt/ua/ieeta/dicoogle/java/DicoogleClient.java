@@ -18,7 +18,11 @@
 package pt.ua.ieeta.dicoogle.java;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.restlet.resource.ClientResource;
 
 /**
  *
@@ -27,7 +31,20 @@ import java.util.List;
 public class DicoogleClient implements IDicoogleClient{
 
     public List<String> searchFreeText(String query) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // Create the client resource  
+        ClientResource resource = new ClientResource("http://restlet.org");
+
+        // Customize the referrer property  
+        resource.setReferrerRef("http://www.mysite.org");
+        try {
+            // Write the response entity on the console
+            resource.get().write(System.out);
+        } catch (IOException ex) {
+            Logger.getLogger(DicoogleClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+        
     }
 
     public List<String> searchAdvanced(String query) {
