@@ -40,7 +40,7 @@ public class DicoogleClient implements IDicoogleClient
         this.endPoint = endPoint;
     }
     
-    public List<String> searchFreeText(String query, QueryLevel level) {
+    public List<String> searchFreeText(String query, QueryLevel level, boolean deep) {
         // Create the client resource  
         ClientResource resource = new ClientResource(this.endPoint + EndPoints.DIM + "?q=" + query);
 
@@ -90,10 +90,10 @@ public class DicoogleClient implements IDicoogleClient
     }
 
     public List<String> searchFreeText(String query) {
-        return this.searchFreeText(query, QueryLevel.IMAGE);
+        return this.searchFreeText(query, QueryLevel.IMAGE, false);
     }
 
-    public List<String> searchAdvanced(String query, QueryLevel level) {
+    public List<String> searchAdvanced(String query, QueryLevel level, boolean deep) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

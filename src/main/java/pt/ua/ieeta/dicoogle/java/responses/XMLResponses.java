@@ -60,6 +60,9 @@ public class XMLResponses {
     
     
     
+    
+    
+    
     private void parse(String response){
         
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

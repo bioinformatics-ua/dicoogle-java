@@ -30,10 +30,10 @@ public interface IDicoogleClient
 {
 
     public List<String> searchFreeText(String query);
-    public List<String> searchFreeText(String query, QueryLevel level);
+    public List<String> searchFreeText(String query, QueryLevel level, boolean deep);
     
     public List<String> searchAdvanced(String query);
-    public List<String> searchAdvanced(String query, QueryLevel level);
+    public List<String> searchAdvanced(String query, QueryLevel level, boolean deep);
     
     public List<String> dump(String sopInstanceUID);
     public void download(String sopInstanceUID, File dest);
