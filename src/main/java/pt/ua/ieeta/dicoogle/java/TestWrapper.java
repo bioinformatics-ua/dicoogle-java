@@ -18,48 +18,24 @@
 
 package pt.ua.ieeta.dicoogle.java;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-
 /**
  *
- * @author Luís A. Bastião Silva <bastiao@ua.pt>
+ * @author Luís A. Bastião Silva - <bastiao@ua.pt>
  */
-public class DicoogleClientTest {
-    private int NUMBER_OF_EXECUTIONS = 1;
+public class TestWrapper {
     
-    public DicoogleClientTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-    
-    @Test
-    public void testSearch()
+    public static void main(String [] args)
     {
+        long startTime = System.currentTimeMillis();
+
         DicoogleClient client = new DicoogleClient("http://localhost:6060/");
-        for (int i = 0 ; i< NUMBER_OF_EXECUTIONS ; i++)
-        {
-            client.searchFreeText("CT");
-        }
-        
-        
+        client.searchFreeText("CT");
+        long estimatedTime = System.currentTimeMillis() - startTime;
+        System.out.println("Estimated time: "+ estimatedTime);
+        startTime = System.currentTimeMillis();
+        client.searchFreeText("CT");
+        estimatedTime = System.currentTimeMillis() - startTime;
+        System.out.println("Estimated time: "+ estimatedTime);
     }
+
 }

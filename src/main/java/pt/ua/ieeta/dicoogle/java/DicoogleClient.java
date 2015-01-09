@@ -19,11 +19,13 @@ package pt.ua.ieeta.dicoogle.java;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.restlet.resource.ClientResource;
 import pt.ua.ieeta.dicoogle.java.dicom.QueryLevel;
+import pt.ua.ieeta.dicoogle.java.responses.XMLResponses;
 
 /**
  * 
@@ -47,7 +49,11 @@ public class DicoogleClient implements IDicoogleClient
         
         try {
             // Write the response entity on the console
-            resource.get().write(System.out);
+            StringWriter writer = new StringWriter();
+
+            resource.get().write(writer);
+            
+            XMLResponses xmlResponse = new XMLResponses(writer.getBuffer().toString());
         } catch (IOException ex) {
             Logger.getLogger(DicoogleClient.class.getName()).log(Level.SEVERE, null, ex);
         }

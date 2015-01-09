@@ -19,6 +19,7 @@
 package pt.ua.ieeta.dicoogle.java.responses;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,7 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -42,7 +44,20 @@ import org.xml.sax.SAXException;
 public class XMLResponses {
     
     
-    public XMLResponses(String response){
+    public XMLResponses(String response)
+    {
+        parse(response);
+    }
+    
+    
+    public XMLResponses(InputStream is)
+    {
+        
+    }
+    
+    
+    
+    private void parse(String response){
         
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = null;
@@ -71,7 +86,7 @@ public class XMLResponses {
         XPath xpath = xpathf.newXPath();
         XPathExpression expr = null;
         try {
-            expr = xpath.compile("/Patient/Study/Series/Images");
+            expr = xpath.compile("/DIM/Patient/Study/Serie/Image");
         } catch (XPathExpressionException ex) {
             Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -82,6 +97,17 @@ public class XMLResponses {
             Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
         }
         NodeList item = (NodeList) res;
+        System.out.println("Print Node List");
+        System.out.println(item.getLength());
+        
+        if (item.getLength()==0)
+            return;
+        for (int i = 0 ; i<item.getLength(); i++)
+        {
+            Node itemNode = item.item(i);
+            //System.out.println(itemNode);
+            System.out.println(itemNode.getAttributes().getNamedItem("path").getNodeValue());
+        }
 
 
     }
