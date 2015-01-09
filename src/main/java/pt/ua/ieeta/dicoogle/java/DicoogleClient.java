@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.restlet.resource.ClientResource;
+import pt.ua.ieeta.dicoogle.java.dicom.QueryLevel;
 
 /**
  *
@@ -31,7 +32,6 @@ import org.restlet.resource.ClientResource;
 public class DicoogleClient implements IDicoogleClient
 {
 
-    
     private String endPoint = "http://localhost:";
     
     public DicoogleClient(String endPoint)
@@ -39,8 +39,7 @@ public class DicoogleClient implements IDicoogleClient
         this.endPoint = endPoint;
     }
     
-    
-    public List<String> searchFreeText(String query) {
+    public List<String> searchFreeText(String query, QueryLevel level) {
         // Create the client resource  
         ClientResource resource = new ClientResource(this.endPoint + EndPoints.DIM + "?q=" + query);
 
@@ -58,7 +57,19 @@ public class DicoogleClient implements IDicoogleClient
     }
 
     public List<String> searchAdvanced(String query) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // Create the client resource  
+        ClientResource resource = new ClientResource(this.endPoint + EndPoints.DIM + "?q=" + query);
+
+        // Customize the referrer property  
+        
+        try {
+            // Write the response entity on the console
+            resource.get().write(System.out);
+        } catch (IOException ex) {
+            Logger.getLogger(DicoogleClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
     }
 
     public List<String> dump(String sopInstanceUID) {
@@ -70,6 +81,14 @@ public class DicoogleClient implements IDicoogleClient
     }
 
     public int numberOfResults(String query) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public List<String> searchFreeText(String query) {
+        return this.searchFreeText(query, QueryLevel.IMAGE);
+    }
+
+    public List<String> searchAdvanced(String query, QueryLevel level) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

@@ -15,30 +15,17 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package pt.ua.ieeta.dicoogle.java;
-
-import java.io.File;
-import java.util.List;
-import pt.ua.ieeta.dicoogle.java.dicom.QueryLevel;
+package pt.ua.ieeta.dicoogle.java.dicom;
 
 /**
  *
  * @author bastiao
  */
-public interface IDicoogleClient 
+public enum QueryLevel 
 {
-
-    public List<String> searchFreeText(String query);
-    public List<String> searchFreeText(String query, QueryLevel level);
-    
-    public List<String> searchAdvanced(String query);
-    public List<String> searchAdvanced(String query, QueryLevel level);
-    
-    public List<String> dump(String sopInstanceUID);
-    public void download(String sopInstanceUID, File dest);
-    public int numberOfResults(String query);
-    
-    
-    
+    PATIENT, 
+    STUDY, 
+    SERIES, 
+    IMAGE;
     
 }
