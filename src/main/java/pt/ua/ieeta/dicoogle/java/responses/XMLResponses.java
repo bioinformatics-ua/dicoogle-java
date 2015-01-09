@@ -39,6 +39,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import pt.ua.ieeta.dicoogle.java.dicom.Image;
+import pt.ua.ieeta.dicoogle.java.dicom.QueryLevel;
 
 /**
  *
@@ -47,9 +48,22 @@ import pt.ua.ieeta.dicoogle.java.dicom.Image;
 public class XMLResponses {
     
     
-    public XMLResponses(String response)
+    private QueryLevel level;
+    private boolean deep;
+    private List<Image> resultImages;
+    
+    public XMLResponses(String response, QueryLevel level, boolean deep )
     {
-        parse(response);
+        
+        if (level==QueryLevel.IMAGE)
+        {
+            parseImageLevel(response);
+        }
+        else{
+            // TODO
+            throw new UnsupportedOperationException("Not supported yet."); 
+        }
+        
     }
     
     
@@ -59,11 +73,13 @@ public class XMLResponses {
     }
     
     
+    public List<Image> getImageResults(){
+        return this.resultImages;
+    }
     
     
     
-    
-    private void parse(String response){
+    private void parseImageLevel(String response){
         
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = null;
@@ -108,16 +124,20 @@ public class XMLResponses {
         
         if (item.getLength()==0)
             return;
+        
+        
+        // Iterate over the results according with the level 
         List<Image> listImages = new ArrayList<Image>();
         for (int i = 0 ; i<item.getLength(); i++)
         {
             Node itemNode = item.item(i);
-            //System.out.println(itemNode);
+            
             Image image = new Image(itemNode.getAttributes().getNamedItem("path").getNodeValue());
-            //System.out.println(itemNode.getAttributes().getNamedItem("path").getNodeValue());
+            listImages.add(image);
             
             
         }
+        this.resultImages = listImages;
 
 
     }

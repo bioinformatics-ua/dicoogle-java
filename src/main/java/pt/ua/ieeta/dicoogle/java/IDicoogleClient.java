@@ -20,6 +20,7 @@ package pt.ua.ieeta.dicoogle.java;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import pt.ua.ieeta.dicoogle.java.dicom.QueryLevel;
 
 /**
@@ -29,13 +30,13 @@ import pt.ua.ieeta.dicoogle.java.dicom.QueryLevel;
 public interface IDicoogleClient 
 {
 
-    public List<String> searchFreeText(String query);
-    public List<String> searchFreeText(String query, QueryLevel level, boolean deep);
+    public List<Object> searchFreeText(String query);
+    public List<Object> searchFreeText(String query, QueryLevel level, boolean deep);
     
-    public List<String> searchAdvanced(String query);
-    public List<String> searchAdvanced(String query, QueryLevel level, boolean deep);
+    public List<Object> searchAdvanced(String query);
+    public List<Object> searchAdvanced(String query, QueryLevel level, boolean deep);
     
-    public List<String> dump(String sopInstanceUID);
+    public Map<String,Object> dump(String sopInstanceUID);
     public void download(String sopInstanceUID, File dest);
     public int numberOfResults(String query);
     

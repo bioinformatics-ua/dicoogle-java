@@ -20,9 +20,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.restlet.resource.ClientResource;
+import pt.ua.ieeta.dicoogle.java.dicom.Image;
 import pt.ua.ieeta.dicoogle.java.dicom.QueryLevel;
 import pt.ua.ieeta.dicoogle.java.responses.XMLResponses;
 
@@ -40,28 +42,28 @@ public class DicoogleClient implements IDicoogleClient
         this.endPoint = endPoint;
     }
     
-    public List<String> searchFreeText(String query, QueryLevel level, boolean deep) {
+    public List<Object> searchFreeText(String query, QueryLevel level, boolean deep) {
         // Create the client resource  
         ClientResource resource = new ClientResource(this.endPoint + EndPoints.DIM + "?q=" + query);
 
         // Customize the referrer property  
-        
+        XMLResponses xmlResponse = null ; 
         try {
             // Write the response entity on the console
             StringWriter writer = new StringWriter();
 
             resource.get().write(writer);
             
-            XMLResponses xmlResponse = new XMLResponses(writer.getBuffer().toString());
+            xmlResponse = new XMLResponses(writer.getBuffer().toString(), level, deep);
         } catch (IOException ex) {
             Logger.getLogger(DicoogleClient.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return null;
+        return (List)xmlResponse.getImageResults();
         
     }
 
-    public List<String> searchAdvanced(String query) {
+    public List<Object> searchAdvanced(String query) {
         // Create the client resource  
         ClientResource resource = new ClientResource(this.endPoint + EndPoints.DIM + "?q=" + query);
 
@@ -77,7 +79,7 @@ public class DicoogleClient implements IDicoogleClient
         return null;
     }
 
-    public List<String> dump(String sopInstanceUID) {
+    public Map<String,Object> dump(String sopInstanceUID) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -89,11 +91,11 @@ public class DicoogleClient implements IDicoogleClient
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public List<String> searchFreeText(String query) {
+    public List<Object> searchFreeText(String query) {
         return this.searchFreeText(query, QueryLevel.IMAGE, false);
     }
 
-    public List<String> searchAdvanced(String query, QueryLevel level, boolean deep) {
+    public List<Object> searchAdvanced(String query, QueryLevel level, boolean deep) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

@@ -18,6 +18,10 @@
 
 package pt.ua.ieeta.dicoogle.java;
 
+import java.util.List;
+import pt.ua.ieeta.dicoogle.java.dicom.Image;
+import pt.ua.ieeta.dicoogle.java.dicom.QueryLevel;
+
 /**
  *
  * @author Luís A. Bastião Silva - <bastiao@ua.pt>
@@ -29,11 +33,16 @@ public class TestWrapper {
         long startTime = System.currentTimeMillis();
 
         DicoogleClient client = new DicoogleClient("http://localhost:6060/");
-        client.searchFreeText("CT");
+        client.searchFreeText("CT", QueryLevel.IMAGE, false);
         long estimatedTime = System.currentTimeMillis() - startTime;
         System.out.println("Estimated time: "+ estimatedTime);
         startTime = System.currentTimeMillis();
-        client.searchFreeText("CT");
+        List<Image> results= null;
+        results = (List)client.searchFreeText("CT", QueryLevel.IMAGE, false);
+        for (Image image : results)
+        {
+            System.out.println(image);
+        }
         estimatedTime = System.currentTimeMillis() - startTime;
         System.out.println("Estimated time: "+ estimatedTime);
     }
