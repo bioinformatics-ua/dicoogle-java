@@ -23,4 +23,29 @@ package pt.ua.ieeta.dicoogle.java.dicom;
  */
 public class Image {
     
+    private String uri ; 
+    public Image(String uri)
+    {
+        this.uri = uri;
+    }
+    
+    public String toString()
+    {
+        return this.getUri(); 
+    }
+
+    /**
+     * @return the uri
+     */
+    public String getUri() {
+        return uri;
+    }
+
+    /**
+     * @param uri the uri to set
+     */
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+    
 }

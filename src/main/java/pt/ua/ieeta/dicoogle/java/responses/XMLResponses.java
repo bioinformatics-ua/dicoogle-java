@@ -21,6 +21,8 @@ package pt.ua.ieeta.dicoogle.java.responses;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -36,6 +38,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import pt.ua.ieeta.dicoogle.java.dicom.Image;
 
 /**
  *
@@ -102,11 +105,15 @@ public class XMLResponses {
         
         if (item.getLength()==0)
             return;
+        List<Image> listImages = new ArrayList<Image>();
         for (int i = 0 ; i<item.getLength(); i++)
         {
             Node itemNode = item.item(i);
             //System.out.println(itemNode);
-            System.out.println(itemNode.getAttributes().getNamedItem("path").getNodeValue());
+            Image image = new Image(itemNode.getAttributes().getNamedItem("path").getNodeValue());
+            //System.out.println(itemNode.getAttributes().getNamedItem("path").getNodeValue());
+            
+            
         }
 
 
