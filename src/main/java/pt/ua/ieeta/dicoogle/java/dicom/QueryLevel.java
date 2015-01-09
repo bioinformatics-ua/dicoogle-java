@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2013 - Luís A. Bastião Silva and Universidade de Aveiro This
+ * Copyright (C) 2015 - Luís A. Bastião Silva and Universidade de Aveiro This
  * program is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later
@@ -15,11 +15,12 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 package pt.ua.ieeta.dicoogle.java.dicom;
 
 /**
  *
- * @author bastiao
+ * @author Luís A. Bastião Silva <bastiao@ua.pt>
  */
 public enum QueryLevel 
 {
