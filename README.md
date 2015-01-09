@@ -8,6 +8,16 @@ dicoogle-java: dicoogle API client
 
 www.dicoogle.com
 
+
+How to use? 
+---------
+
+```
+DicoogleClient client = new DicoogleClient("http://localhost:6060/");
+client.searchFreeText("CT", QueryLevel.IMAGE, false);
+```
+
+
 Resources
 ---------
 
