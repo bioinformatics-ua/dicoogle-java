@@ -7,8 +7,6 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-
-
     <name>Dicoogle-Java</name>
     <url>http://maven.apache.org</url>
 
@@ -18,6 +16,13 @@
             <name>Public online Restlet repository</name>  
             <url>http://maven.restlet.org</url>  
         </repository>  
+        <repository>
+            <id>mi</id>
+            <url>http://bioinformatics.ua.pt/maven/content/repositories/mi</url>
+            <snapshots>
+                    <enabled>false</enabled>
+            </snapshots>
+        </repository>
     </repositories>  
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
