@@ -19,7 +19,6 @@
 package pt.ua.ieeta.dicoogle.java.responses;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,10 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import pt.ua.ieeta.dicoogle.java.dicom.Image;
+import pt.ua.ieeta.dicoogle.java.dicom.Patient;
 import pt.ua.ieeta.dicoogle.java.dicom.QueryLevel;
+import pt.ua.ieeta.dicoogle.java.dicom.Serie;
+import pt.ua.ieeta.dicoogle.java.dicom.Study;
 
 /**
  *
@@ -47,13 +49,19 @@ import pt.ua.ieeta.dicoogle.java.dicom.QueryLevel;
  */
 public class XMLResponses {
     
-    
     private QueryLevel level;
     private boolean deep;
     private List<Image> resultImages;
+    private List<Serie> resultSeries;
+    private List<Study> resultStudies;
+    private List<Patient> resultPatients;
+    
     
     public XMLResponses(String response, QueryLevel level, boolean deep )
     {
+        
+        this.deep = deep;
+        this.level = level;
         
         if (level==QueryLevel.IMAGE)
         {
@@ -64,11 +72,7 @@ public class XMLResponses {
             throw new UnsupportedOperationException("Not supported yet."); 
         }
         
-    }
-    
-    
-    public XMLResponses(InputStream is)
-    {
+        
         
     }
     
@@ -77,7 +81,216 @@ public class XMLResponses {
         return this.resultImages;
     }
     
+    public List<Serie> getSerieResults(){
+        return this.resultSeries;
+    }
     
+    public List<Study> getStudyResults(){
+        return this.resultStudies;
+    }
+    
+    public List<Patient> getPatientResults(){
+        return this.resultPatients;
+    }
+    
+    
+    
+    private void parsePatientLevel(String response )
+    {
+        
+        
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = null;
+        try {
+            docBuilder = dbf.newDocumentBuilder();
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        InputSource is = new InputSource(new StringReader(response));
+        Document doc = null;
+        try {
+            doc = docBuilder.parse(is);
+        } catch (SAXException ex) {
+            Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (doc!=null)
+        {
+            doc.getDocumentElement().normalize();
+        }
+        
+
+        XPathFactory xpathf = XPathFactory.newInstance();
+        XPath xpath = xpathf.newXPath();
+        XPathExpression expr = null;
+        try {
+            expr = xpath.compile("/DIM/Patient");
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Object res = null;
+        try {
+            res = expr.evaluate(doc, XPathConstants.NODESET);
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        NodeList item = (NodeList) res;
+        System.out.println("Print Node List");
+        System.out.println(item.getLength());
+        
+        if (item.getLength()==0)
+            return;
+        
+        // Iterate over the results according with the level 
+        List<Serie> results = new ArrayList<Serie>();
+        for (int i = 0 ; i<item.getLength(); i++)
+        {
+            Node itemNode = item.item(i);
+            String modality = itemNode.getAttributes().getNamedItem("modality").getNodeValue();
+            String seriesInstanceUID = itemNode.getAttributes().getNamedItem("id").getNodeValue();
+            
+            //TODO: The study part need to be fixed
+            Serie serie = new Serie(null, seriesInstanceUID, modality);
+            results.add(serie);
+            
+        }
+        this.resultSeries = results;
+    
+    }
+    
+    private void parseStudyLevel(String response )
+    {
+        
+        
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = null;
+        try {
+            docBuilder = dbf.newDocumentBuilder();
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        InputSource is = new InputSource(new StringReader(response));
+        Document doc = null;
+        try {
+            doc = docBuilder.parse(is);
+        } catch (SAXException ex) {
+            Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (doc!=null)
+        {
+            doc.getDocumentElement().normalize();
+        }
+        
+
+        XPathFactory xpathf = XPathFactory.newInstance();
+        XPath xpath = xpathf.newXPath();
+        XPathExpression expr = null;
+        try {
+            expr = xpath.compile("/DIM/Patient/Study");
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Object res = null;
+        try {
+            res = expr.evaluate(doc, XPathConstants.NODESET);
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        NodeList item = (NodeList) res;
+        System.out.println("Print Node List");
+        System.out.println(item.getLength());
+        
+        if (item.getLength()==0)
+            return;
+        
+        // Iterate over the results according with the level 
+        List<Serie> results = new ArrayList<Serie>();
+        for (int i = 0 ; i<item.getLength(); i++)
+        {
+            Node itemNode = item.item(i);
+            String modality = itemNode.getAttributes().getNamedItem("modality").getNodeValue();
+            String seriesInstanceUID = itemNode.getAttributes().getNamedItem("id").getNodeValue();
+            
+            //TODO: The study part need to be fixed
+            Serie serie = new Serie(null, seriesInstanceUID, modality);
+            results.add(serie);
+            
+        }
+        this.resultSeries = results;
+    
+    }
+    
+    
+    
+    private void parseSerieLevel(String response )
+    {
+        
+        
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = null;
+        try {
+            docBuilder = dbf.newDocumentBuilder();
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        InputSource is = new InputSource(new StringReader(response));
+        Document doc = null;
+        try {
+            doc = docBuilder.parse(is);
+        } catch (SAXException ex) {
+            Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (doc!=null)
+        {
+            doc.getDocumentElement().normalize();
+        }
+        
+
+        XPathFactory xpathf = XPathFactory.newInstance();
+        XPath xpath = xpathf.newXPath();
+        XPathExpression expr = null;
+        try {
+            expr = xpath.compile("/DIM/Patient/Study/Serie");
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Object res = null;
+        try {
+            res = expr.evaluate(doc, XPathConstants.NODESET);
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        NodeList item = (NodeList) res;
+        System.out.println("Print Node List");
+        System.out.println(item.getLength());
+        
+        if (item.getLength()==0)
+            return;
+        
+        // Iterate over the results according with the level 
+        List<Serie> results = new ArrayList<Serie>();
+        for (int i = 0 ; i<item.getLength(); i++)
+        {
+            Node itemNode = item.item(i);
+            String modality = itemNode.getAttributes().getNamedItem("modality").getNodeValue();
+            String seriesInstanceUID = itemNode.getAttributes().getNamedItem("id").getNodeValue();
+            
+            //TODO: The study part need to be fixed
+            Serie serie = new Serie(null, seriesInstanceUID, modality);
+            results.add(serie);
+            
+        }
+        this.resultSeries = results;
+    
+    }
     
     private void parseImageLevel(String response){
         
@@ -134,7 +347,6 @@ public class XMLResponses {
             
             Image image = new Image(itemNode.getAttributes().getNamedItem("path").getNodeValue());
             listImages.add(image);
-            
             
         }
         this.resultImages = listImages;
