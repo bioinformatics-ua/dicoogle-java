@@ -4,7 +4,7 @@
 
     <groupId>pt.ua.ieeta</groupId>
     <artifactId>Dicoogle-Java</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Dicoogle-Java</name>
@@ -20,10 +20,30 @@
             <id>mi</id>
             <url>http://bioinformatics.ua.pt/maven/content/repositories/mi</url>
             <snapshots>
-                    <enabled>false</enabled>
+                    <enabled>true</enabled>
             </snapshots>
         </repository>
     </repositories>  
+    
+    
+    <!--
+      Artifact deployment configuration (project redistribution)
+    -->
+    <distributionManagement>
+        <!-- Versioned releases are published to the releases repository -->
+        <repository>
+            <id>mi</id>
+            <name>Bioinformatics Nexus (Internal Releases)</name>
+            <url>http://bioinformatics.ua.pt/maven/content/repositories/mi</url>
+        </repository>
+
+        <!-- Snapshot releases are published to the snapshots repository -->
+        <snapshotRepository>
+            <id>mi-snapshots</id>
+            <name>Bioinformatics Nexus (Internal Snapshots)</name>
+            <url>http://bioinformatics.ua.pt/maven/content/repositories/mi-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
