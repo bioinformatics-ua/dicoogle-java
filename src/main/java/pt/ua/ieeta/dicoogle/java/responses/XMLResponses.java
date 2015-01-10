@@ -67,7 +67,20 @@ public class XMLResponses {
         {
             parseImageLevel(response);
         }
-        else{
+        else if (level==QueryLevel.SERIES)
+        {
+            parseSerieLevel(response);
+        }
+        else if (level==QueryLevel.STUDY)
+        {
+            parseStudyLevel(response);
+        }
+        else if (level==QueryLevel.PATIENT)
+        {
+            parsePatientLevel(response);
+        }
+        
+        else {
             // TODO
             throw new UnsupportedOperationException("Not supported yet."); 
         }
@@ -137,26 +150,24 @@ public class XMLResponses {
             Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
         }
         NodeList item = (NodeList) res;
-        System.out.println("Print Node List");
-        System.out.println(item.getLength());
         
         if (item.getLength()==0)
             return;
         
         // Iterate over the results according with the level 
-        List<Serie> results = new ArrayList<Serie>();
+        List<Patient> results = new ArrayList<Patient>();
         for (int i = 0 ; i<item.getLength(); i++)
         {
             Node itemNode = item.item(i);
-            String modality = itemNode.getAttributes().getNamedItem("modality").getNodeValue();
-            String seriesInstanceUID = itemNode.getAttributes().getNamedItem("id").getNodeValue();
+            String patientID = itemNode.getAttributes().getNamedItem("id").getNodeValue();
+            String patientName = itemNode.getAttributes().getNamedItem("name").getNodeValue();
             
             //TODO: The study part need to be fixed
-            Serie serie = new Serie(null, seriesInstanceUID, modality);
-            results.add(serie);
+            Patient patient = new Patient(patientID, patientName);
+            results.add(patient);
             
         }
-        this.resultSeries = results;
+        this.resultPatients = results;
     
     }
     
@@ -202,26 +213,25 @@ public class XMLResponses {
             Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
         }
         NodeList item = (NodeList) res;
-        System.out.println("Print Node List");
-        System.out.println(item.getLength());
+
         
         if (item.getLength()==0)
             return;
         
         // Iterate over the results according with the level 
-        List<Serie> results = new ArrayList<Serie>();
+        List<Study> results = new ArrayList<Study>();
         for (int i = 0 ; i<item.getLength(); i++)
         {
             Node itemNode = item.item(i);
-            String modality = itemNode.getAttributes().getNamedItem("modality").getNodeValue();
-            String seriesInstanceUID = itemNode.getAttributes().getNamedItem("id").getNodeValue();
+            String studyDate = itemNode.getAttributes().getNamedItem("date").getNodeValue();
+            String studyInstanceUID = itemNode.getAttributes().getNamedItem("id").getNodeValue();
             
             //TODO: The study part need to be fixed
-            Serie serie = new Serie(null, seriesInstanceUID, modality);
-            results.add(serie);
+            Study study = new Study(null, studyInstanceUID, studyDate);
+            results.add(study);
             
         }
-        this.resultSeries = results;
+        this.resultStudies = results;
     
     }
     
@@ -269,9 +279,7 @@ public class XMLResponses {
             Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
         }
         NodeList item = (NodeList) res;
-        System.out.println("Print Node List");
-        System.out.println(item.getLength());
-        
+
         if (item.getLength()==0)
             return;
         
@@ -332,8 +340,7 @@ public class XMLResponses {
             Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
         }
         NodeList item = (NodeList) res;
-        System.out.println("Print Node List");
-        System.out.println(item.getLength());
+
         
         if (item.getLength()==0)
             return;

@@ -51,7 +51,6 @@ public class DicoogleClient implements IDicoogleClient
         try {
             // Write the response entity on the console
             StringWriter writer = new StringWriter();
-
             resource.get().write(writer);
             
             xmlResponse = new XMLResponses(writer.getBuffer().toString(), level, deep);
