@@ -36,7 +36,7 @@ public interface IDicoogleClient
     public List<Object> searchAdvanced(String query);
     public List<Object> searchAdvanced(String query, QueryLevel level, boolean deep);
     
-    public Map<String,Object> dump(String sopInstanceUID);
+    public Map<String,String> dump(String sopInstanceUID);
     public void download(String sopInstanceUID, File dest);
     public int numberOfResults(String query);
     

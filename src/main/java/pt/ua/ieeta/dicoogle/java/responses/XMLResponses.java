@@ -85,8 +85,6 @@ public class XMLResponses {
             throw new UnsupportedOperationException("Not supported yet."); 
         }
         
-        
-        
     }
     
     
@@ -234,8 +232,6 @@ public class XMLResponses {
         this.resultStudies = results;
     
     }
-    
-    
     
     private void parseSerieLevel(String response )
     {

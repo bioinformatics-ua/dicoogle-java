@@ -45,6 +45,8 @@ public class TestWrapper {
         }
         estimatedTime = System.currentTimeMillis() - startTime;
         System.out.println("Estimated time: "+ estimatedTime);
+        
+        System.out.println(client.dump("0.0.0.0.1.8811.2.1.20010413115754.12432"));
     }
 
 }

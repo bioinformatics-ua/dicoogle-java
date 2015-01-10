@@ -62,4 +62,20 @@ public class DicoogleClientTest {
         
         
     }
+    
+    @Test
+    public void testDump()
+    {
+        DicoogleClient client = new DicoogleClient("http://localhost:6060/");
+        for (int i = 0 ; i< NUMBER_OF_EXECUTIONS ; i++)
+        {
+            System.out.println(client.dump("0.0.0.0.1.8811.2.1.20010413115754.12432"));
+        }
+        
+        
+    }
+    
+    
+    
+    
 }

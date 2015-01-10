@@ -24,8 +24,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.restlet.resource.ClientResource;
-import pt.ua.ieeta.dicoogle.java.dicom.Image;
 import pt.ua.ieeta.dicoogle.java.dicom.QueryLevel;
+import pt.ua.ieeta.dicoogle.java.responses.XMLDumpResponses;
 import pt.ua.ieeta.dicoogle.java.responses.XMLResponses;
 
 /**
@@ -59,27 +59,36 @@ public class DicoogleClient implements IDicoogleClient
         }
 
         return (List)xmlResponse.getImageResults();
-        
     }
 
     public List<Object> searchAdvanced(String query) {
-        // Create the client resource  
-        ClientResource resource = new ClientResource(this.endPoint + EndPoints.DIM + "?q=" + query);
+        return this.searchAdvanced(query, QueryLevel.IMAGE, false);
+    }
 
-        // Customize the referrer property  
+    /**
+     * Dump tags of a image
+     * @param sopInstanceUID
+     * @return map with a tags and values 
+     */
+    public Map<String,String> dump(String sopInstanceUID) {
+        ClientResource resource = new ClientResource(this.endPoint + EndPoints.DUMP + "?uid=" + sopInstanceUID);
         
+        // Customize the referrer property  
+        XMLDumpResponses xmlResponse = null ; 
         try {
             // Write the response entity on the console
-            resource.get().write(System.out);
+            StringWriter writer = new StringWriter();
+            resource.get().write(writer);
+            
+            String dumpXMLStr= writer.getBuffer().toString();
+            xmlResponse = new XMLDumpResponses(dumpXMLStr);
+            
         } catch (IOException ex) {
             Logger.getLogger(DicoogleClient.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        return xmlResponse.getTags(); 
 
-        return null;
-    }
-
-    public Map<String,Object> dump(String sopInstanceUID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void download(String sopInstanceUID, File dest) {
@@ -95,7 +104,19 @@ public class DicoogleClient implements IDicoogleClient
     }
 
     public List<Object> searchAdvanced(String query, QueryLevel level, boolean deep) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // Create the client resource  
+        ClientResource resource = new ClientResource(this.endPoint + EndPoints.DIM + "?advq=" + query);
+
+        // Customize the referrer property  
+        
+        try {
+            // Write the response entity on the console
+            resource.get().write(System.out);
+        } catch (IOException ex) {
+            Logger.getLogger(DicoogleClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
     }
     
 }
