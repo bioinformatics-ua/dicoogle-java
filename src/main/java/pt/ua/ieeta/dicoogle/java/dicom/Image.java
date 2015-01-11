@@ -24,14 +24,21 @@ package pt.ua.ieeta.dicoogle.java.dicom;
 public class Image {
     
     private String uri ; 
+    private String uid ; 
     public Image(String uri)
     {
         this.uri = uri;
     }
     
+    public Image(String uid, String uri)
+    {
+        this.uri = uri;
+        this.uid = uid;
+    }
+    
     public String toString()
     {
-        return this.getUri(); 
+        return this.uid + ", " + this.uri;
     }
 
     /**
@@ -47,5 +54,20 @@ public class Image {
     public void setUri(String uri) {
         this.uri = uri;
     }
+
+    /**
+     * @return the uid
+     */
+    public String getUid() {
+        return uid;
+    }
+
+    /**
+     * @param uid the uid to set
+     */
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
     
+
 }

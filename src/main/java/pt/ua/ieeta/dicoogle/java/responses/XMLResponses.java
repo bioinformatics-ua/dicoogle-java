@@ -348,7 +348,8 @@ public class XMLResponses {
         {
             Node itemNode = item.item(i);
             
-            Image image = new Image(itemNode.getAttributes().getNamedItem("path").getNodeValue());
+            Image image = new Image(itemNode.getAttributes().getNamedItem("uid").getNodeValue(),
+                    itemNode.getAttributes().getNamedItem("path").getNodeValue());
             listImages.add(image);
             
         }

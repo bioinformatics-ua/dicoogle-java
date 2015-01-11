@@ -4,7 +4,7 @@
 
     <groupId>pt.ua.ieeta</groupId>
     <artifactId>Dicoogle-Java</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.3</version>
     <packaging>jar</packaging>
 
     <name>Dicoogle-Java</name>
