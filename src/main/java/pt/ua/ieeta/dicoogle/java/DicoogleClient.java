@@ -108,15 +108,19 @@ public class DicoogleClient implements IDicoogleClient
         ClientResource resource = new ClientResource(this.endPoint + EndPoints.DIM + "?advq=" + query);
 
         // Customize the referrer property  
-        
+        XMLResponses xmlResponse = null ; 
         try {
             // Write the response entity on the console
-            resource.get().write(System.out);
+            StringWriter writer = new StringWriter();
+            resource.get().write(writer);
+            
+            xmlResponse = new XMLResponses(writer.getBuffer().toString(), level, deep);
         } catch (IOException ex) {
             Logger.getLogger(DicoogleClient.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return null;
+        return (List)xmlResponse.getImageResults();
+        
     }
     
 }
