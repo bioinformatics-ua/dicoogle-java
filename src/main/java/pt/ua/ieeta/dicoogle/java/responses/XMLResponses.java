@@ -297,6 +297,9 @@ public class XMLResponses {
     }
     
     private void parseImageLevel(String response){
+        List<String> attributes = new ArrayList<String>();
+        attributes.add("ViewPosition");
+        attributes.add("InstanceNumber");
         
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = null;
@@ -325,7 +328,7 @@ public class XMLResponses {
         XPath xpath = xpathf.newXPath();
         XPathExpression expr = null;
         try {
-            expr = xpath.compile("/DIM/Patient/Study/Serie/Image");
+            expr = xpath.compile("//Image");
         } catch (XPathExpressionException ex) {
             Logger.getLogger(XMLResponses.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -350,6 +353,20 @@ public class XMLResponses {
             
             Image image = new Image(itemNode.getAttributes().getNamedItem("uid").getNodeValue(),
                     itemNode.getAttributes().getNamedItem("path").getNodeValue());
+            
+            // List other attributes 
+            for (String a : attributes)
+            {
+                try
+                {
+                    image.setTag(a, itemNode.getAttributes().getNamedItem(a).getNodeValue());
+                }
+                catch (Exception e)
+                {
+                    
+                }
+                
+            }
             listImages.add(image);
             
         }

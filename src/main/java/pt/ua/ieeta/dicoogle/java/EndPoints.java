@@ -24,8 +24,8 @@ package pt.ua.ieeta.dicoogle.java;
  */
 public class EndPoints 
 {
-
     public static final String SEARCH = "search";
+    public static final String IMAGESEARCH = "imageSearch";
     public static final String DIC2PNG = "dic2png";
     public static final String DICTAGS = "dictags";
     public static final String PLUGINS = "plugin";
@@ -37,6 +37,5 @@ public class EndPoints
     public static final String IMAGE = "image";
     public static final String ENUMFIELD = "enumField";
     public static final String WADO = "wado";
-    public static final String EXAMTIME = "examTime";
-            
+    public static final String EXAMTIME = "examTime";   
 }

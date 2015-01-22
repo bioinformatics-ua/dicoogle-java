@@ -18,12 +18,14 @@
 
 package pt.ua.ieeta.dicoogle.java;
 
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import pt.ua.ieeta.dicoogle.java.dicom.Image;
+import pt.ua.ieeta.dicoogle.java.dicom.QueryLevel;
 
 /**
  *
@@ -58,6 +60,24 @@ public class DicoogleClientTest {
         for (int i = 0 ; i< NUMBER_OF_EXECUTIONS ; i++)
         {
             client.searchFreeText("CT");
+        }
+        
+        
+    }
+    @Test
+    public void testSearchAdv()
+    {
+        DicoogleClient client = new DicoogleClient("http://localhost:6060/");
+        for (int i = 0 ; i< NUMBER_OF_EXECUTIONS ; i++)
+        {
+            List<Object> xxx = client.searchAdvanced("Modality:CT", QueryLevel.IMAGE, false);
+            for (Object o : xxx)
+            {
+                Image img  = (Image) o ;
+                System.out.println(img);
+                System.out.println(img.getTag("ViewPosition"));
+                System.out.println(img.getTag("InstanceNumber"));
+            }
         }
         
         

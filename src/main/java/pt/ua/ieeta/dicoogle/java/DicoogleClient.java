@@ -42,25 +42,6 @@ public class DicoogleClient implements IDicoogleClient
         this.endPoint = endPoint;
     }
     
-    public List<Object> searchFreeText(String query, QueryLevel level, boolean deep) {
-        // Create the client resource  
-        ClientResource resource = new ClientResource(this.endPoint + EndPoints.DIM + "?q=" + query);
-
-        // Customize the referrer property  
-        XMLResponses xmlResponse = null ; 
-        try {
-            // Write the response entity on the console
-            StringWriter writer = new StringWriter();
-            resource.get().write(writer);
-            
-            xmlResponse = new XMLResponses(writer.getBuffer().toString(), level, deep);
-        } catch (IOException ex) {
-            Logger.getLogger(DicoogleClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return (List)xmlResponse.getImageResults();
-    }
-
     public List<Object> searchAdvanced(String query) {
         return this.searchAdvanced(query, QueryLevel.IMAGE, false);
     }
@@ -102,11 +83,23 @@ public class DicoogleClient implements IDicoogleClient
     public List<Object> searchFreeText(String query) {
         return this.searchFreeText(query, QueryLevel.IMAGE, false);
     }
+    
+
 
     public List<Object> searchAdvanced(String query, QueryLevel level, boolean deep) {
+        
         // Create the client resource  
-        ClientResource resource = new ClientResource(this.endPoint + EndPoints.DIM + "?advq=" + query);
+        ClientResource resource = null;
 
+        if (level==QueryLevel.IMAGE)
+        {
+            resource = new ClientResource(this.endPoint + EndPoints.IMAGESEARCH + "?advq=" + query);
+        }
+        else
+        {
+            resource = new ClientResource(this.endPoint + EndPoints.DIM + "?advq=" + query);
+        }
+        
         // Customize the referrer property  
         XMLResponses xmlResponse = null ; 
         try {
@@ -122,5 +115,38 @@ public class DicoogleClient implements IDicoogleClient
         return (List)xmlResponse.getImageResults();
         
     }
+    
+    
+    
+    public List<Object> searchFreeText(String query, QueryLevel level, boolean deep) {
+       
+        // Create the client resource  
+        ClientResource resource = null;
+
+        if (level==QueryLevel.IMAGE)
+        {
+            resource = new ClientResource(this.endPoint + EndPoints.IMAGESEARCH + "?q=" + query);
+        }
+        else
+        {
+            resource = new ClientResource(this.endPoint + EndPoints.DIM + "?q=" + query);
+        }
+        
+        
+        // Customize the referrer property  
+        XMLResponses xmlResponse = null ; 
+        try {
+            // Write the response entity on the console
+            StringWriter writer = new StringWriter();
+            resource.get().write(writer);
+            
+            xmlResponse = new XMLResponses(writer.getBuffer().toString(), level, deep);
+        } catch (IOException ex) {
+            Logger.getLogger(DicoogleClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return (List)xmlResponse.getImageResults();
+    }
+
     
 }

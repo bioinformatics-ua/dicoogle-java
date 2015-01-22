@@ -17,6 +17,9 @@
 
 package pt.ua.ieeta.dicoogle.java.dicom;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author Luís A. Bastião Silva <bastiao@ua.pt>
@@ -25,9 +28,11 @@ public class Image {
     
     private String uri ; 
     private String uid ; 
+    private Map<String, String> tags = new HashMap<String, String>();
     public Image(String uri)
     {
         this.uri = uri;
+        
     }
     
     public Image(String uid, String uri)
@@ -35,6 +40,17 @@ public class Image {
         this.uri = uri;
         this.uid = uid;
     }
+    
+    public void setTag(String tag, String value)
+    {
+        tags.put(tag, value);
+    }
+    
+    public String getTag(String tag)
+    {
+        return tags.get(tag);
+    }
+    
     
     public String toString()
     {
