@@ -17,7 +17,7 @@ If you use maven:
  <dependency>
   <groupId>pt.ua.ieeta</groupId>
   <artifactId>Dicoogle-Java</artifactId>
-  <version>0.2</version>
+  <version>0.5</version>
 </dependency>
 ```
 
