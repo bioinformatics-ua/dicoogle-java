@@ -61,8 +61,10 @@ public class DicoogleClient implements IDicoogleClient
             StringWriter writer = new StringWriter();
             resource.get().write(writer);
             
+            
             String dumpXMLStr= writer.getBuffer().toString();
             xmlResponse = new XMLDumpResponses(dumpXMLStr);
+            resource.get().release();
             
         } catch (IOException ex) {
             Logger.getLogger(DicoogleClient.class.getName()).log(Level.SEVERE, null, ex);
@@ -107,11 +109,13 @@ public class DicoogleClient implements IDicoogleClient
             StringWriter writer = new StringWriter();
             resource.get().write(writer);
             
+            resource.get().release();
+            
             xmlResponse = new XMLResponses(writer.getBuffer().toString(), level, deep);
         } catch (IOException ex) {
             Logger.getLogger(DicoogleClient.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         return (List)xmlResponse.getImageResults();
         
     }
@@ -139,7 +143,7 @@ public class DicoogleClient implements IDicoogleClient
             // Write the response entity on the console
             StringWriter writer = new StringWriter();
             resource.get().write(writer);
-            
+            resource.release();
             xmlResponse = new XMLResponses(writer.getBuffer().toString(), level, deep);
         } catch (IOException ex) {
             Logger.getLogger(DicoogleClient.class.getName()).log(Level.SEVERE, null, ex);

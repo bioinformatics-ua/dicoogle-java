@@ -39,9 +39,18 @@ public class TestWrapper {
         startTime = System.currentTimeMillis();
         List<Image> results= null;
         results = (List)client.searchFreeText("CT", QueryLevel.IMAGE, false);
-        for (Image image : results)
+        for( int i = 0; i<1000 ; i++)
         {
-            System.out.println(image);
+        
+        Thread t = new Thread(new Runnable() {
+
+                        public void run() {
+                            
+                            DicoogleClient client = new DicoogleClient("http://localhost:6060/");
+                            client.searchAdvanced(":*:");
+                        }
+        });
+        t.start();
         }
         estimatedTime = System.currentTimeMillis() - startTime;
         System.out.println("Estimated time: "+ estimatedTime);

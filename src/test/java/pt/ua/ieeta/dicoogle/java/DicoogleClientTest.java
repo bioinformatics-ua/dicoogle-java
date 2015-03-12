@@ -32,7 +32,7 @@ import pt.ua.ieeta.dicoogle.java.dicom.QueryLevel;
  * @author Luís A. Bastião Silva <bastiao@ua.pt>
  */
 public class DicoogleClientTest {
-    private int NUMBER_OF_EXECUTIONS = 1;
+    private int NUMBER_OF_EXECUTIONS = 100;
     
     public DicoogleClientTest() {
     }
@@ -56,10 +56,18 @@ public class DicoogleClientTest {
     @Test
     public void testSearch()
     {
-        DicoogleClient client = new DicoogleClient("http://localhost:6060/");
+        
         for (int i = 0 ; i< NUMBER_OF_EXECUTIONS ; i++)
         {
-            client.searchFreeText("CT");
+            Thread t = new Thread(new Runnable() {
+
+                public void run() {
+                    DicoogleClient client_T = new DicoogleClient("http://localhost:6060/");
+                    List<Object> xxx = client_T.searchAdvanced("Modality:CT", QueryLevel.IMAGE, false);
+                    client_T.searchFreeText("CT");
+                }
+            });
+            
         }
         
         
