@@ -85,6 +85,7 @@ public class DicoogleClientTest {
                 System.out.println(img);
                 System.out.println(img.getTag("ViewPosition"));
                 System.out.println(img.getTag("InstanceNumber"));
+                System.out.println(img.getTag("NumberOfFrames"));
             }
         }
         
@@ -97,7 +98,7 @@ public class DicoogleClientTest {
         DicoogleClient client = new DicoogleClient("http://localhost:6060/");
         for (int i = 0 ; i< NUMBER_OF_EXECUTIONS ; i++)
         {
-            System.out.println(client.dump("0.0.0.0.1.8811.2.1.20010413115754.12432"));
+            //System.out.println(client.dump("0.0.0.0.1.8811.2.1.20010413115754.12432"));
         }
         
         

@@ -300,6 +300,7 @@ public class XMLResponses {
         List<String> attributes = new ArrayList<String>();
         attributes.add("ViewPosition");
         attributes.add("InstanceNumber");
+        attributes.add("NumberOfFrames");
         
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = null;
