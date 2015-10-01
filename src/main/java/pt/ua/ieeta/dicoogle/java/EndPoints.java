@@ -27,9 +27,9 @@ public class EndPoints
     
     
     // request to extensions (maybe not available in default instantiation)
-    public static final String SEARCH = "ext/search";
-    public static final String DIM = "ext/dim";
-    public static final String IMAGESEARCH = "ext/imageSearch";
+    public static final String SEARCH = "search";
+    public static final String DIM = "dim";
+    public static final String IMAGESEARCH = "imageSearch";
     
     
     public static final String DIC2PNG = "dic2png";
