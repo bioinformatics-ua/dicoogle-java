@@ -24,13 +24,18 @@ package pt.ua.ieeta.dicoogle.java;
  */
 public class EndPoints 
 {
-    public static final String SEARCH = "search";
-    public static final String IMAGESEARCH = "imageSearch";
+    
+    
+    // request to extensions (maybe not available in default instantiation)
+    public static final String SEARCH = "ext/search";
+    public static final String DIM = "ext/dim";
+    public static final String IMAGESEARCH = "ext/imageSearch";
+    
+    
     public static final String DIC2PNG = "dic2png";
     public static final String DICTAGS = "dictags";
     public static final String PLUGINS = "plugin";
     public static final String INDEX = "indexer";
-    public static final String DIM = "dim";
     public static final String FILE = "file";
     public static final String DUMP = "dump";
     public static final String TAGS = "tags";
